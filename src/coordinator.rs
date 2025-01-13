@@ -621,7 +621,7 @@ impl Coordinator {
         }
 
         //  this is the first version of the content, so nothing to garbage collect
-        if root_content_id.version <= 1 {
+        if (root_content_id.version <= 1) {
             self.shared_state
                 .mark_change_events_as_processed(vec![change], Vec::new())
                 .await?;

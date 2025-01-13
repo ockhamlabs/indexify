@@ -40,4 +40,12 @@ impl TaskAllocator {
             .await?;
         self.planner.plan_allocations(task_ids).await
     }
+
+    /// Allocate tasks to newly created executors
+    pub async fn allocate_tasks_to_new_executors(
+        &self,
+        task_ids: HashSet<TaskId>,
+    ) -> Result<TaskAllocationPlan> {
+        self.planner.plan_allocations(task_ids).await
+    }
 }

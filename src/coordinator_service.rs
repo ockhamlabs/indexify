@@ -220,6 +220,11 @@ impl CoordinatorService for CoordinatorServiceServer {
         for id in request.executors {
             if let Some(last_time) = executors.get_mut(&id) {
                 *last_time = now;
+            } else {
+                // If the executor is not found, trigger its creation
+                if let Err(e) = self.coordinator.create_executor(&id).await {
+                    error!("Failed to create executor {}: {}", id, e);
+                }
             }
         }
         Ok(tonic::Response::new(ExecutorsHeartbeatResponse {}))
